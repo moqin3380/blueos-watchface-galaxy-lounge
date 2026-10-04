@@ -2,12 +2,15 @@
   <div class="wrap">
     <div class="container">
       <image class="bg" src="{{bgUrl}}" />
+      <div class="date-wrap">
+        <text class="date">{{dateStr}}</text>
+      </div>
       <div class="time-wrap">
-        <text class="time c0">{{timeChars[0]}}</text>
-        <text class="time c1">{{timeChars[1]}}</text>
-        <text class="time c2">{{timeChars[2]}}</text>
-        <text class="time c3">{{timeChars[3]}}</text>
-        <text class="time c4">{{timeChars[4]}}</text>
+        <text class="time">{{timeChars[0]}}</text>
+        <text class="time">{{timeChars[1]}}</text>
+        <text class="time">{{timeChars[2]}}</text>
+        <text class="time">{{timeChars[3]}}</text>
+        <text class="time">{{timeChars[4]}}</text>
       </div>
       <div class="steps-wrap">
         <div class="steps-group">
@@ -34,6 +37,7 @@ const FRAME_COUNT = 50
 const FRAME_MS = 100
 const STEPS_MS = 10000
 const STEPS_DEFAULT = 8000
+const WEEK_DAYS = ['日', '一', '二', '三', '四', '五', '六']
 
 export default {
   props: [],
@@ -43,6 +47,7 @@ export default {
       stepsTimerId: -1,
       frameIdx: 1,
       timeChars: ['0', '0', ':', '0', '0'],
+      dateStr: '',
       stepsChars: ['8', '0', '0', '0', '', ''],
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
     }
@@ -62,6 +67,7 @@ export default {
   updateTime() {
     const t = new Date()
     this.timeChars = (this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())).split('')
+    this.dateStr = '周' + WEEK_DAYS[t.getDay()] + '  ' + this.pad2(t.getMonth() + 1) + '.' + this.pad2(t.getDate())
   },
 
   initSteps() {
@@ -136,7 +142,7 @@ export default {
       object-fit: cover;
     }
 
-    .time-wrap {
+    .date-wrap {
       position: absolute;
       top: 0;
       left: 0;
@@ -144,21 +150,32 @@ export default {
       height: 100%;
       flex-direction: row;
       align-items: flex-start;
-      justify-content: flex-start;
-      padding-top: 40px;
-      padding-left: 110px;
+      justify-content: center;
+      padding-top: 36px;
+    }
+
+    .date {
+      font-size: 34px;
+      color: #ffffff;
+      opacity: 0.9;
+    }
+
+    .time-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
     }
 
     .time {
-      font-size: 56px;
+      color: rgba(255, 255, 255, 0.42);
+      font-size: 150px;
       font-weight: bold;
     }
-
-    .c0 { color: #9ad9ff; }
-    .c1 { color: #b9e8c8; }
-    .c2 { color: #f4e79e; }
-    .c3 { color: #ffde6e; }
-    .c4 { color: #ffd028; }
 
     .steps-wrap {
       position: absolute;
@@ -229,9 +246,8 @@ export default {
         object-fit: cover;
       }
 
-      .time-wrap {
-        padding-top: 12px;
-        padding-left: 24px;
+      .date-wrap {
+        padding-top: 24px;
       }
 
       .steps-wrap {
