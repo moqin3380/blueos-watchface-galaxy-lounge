@@ -13,10 +13,12 @@
         <div class="walker">
           <div class="wk-head"></div>
           <div class="wk-body"></div>
-          <div class="wk-leg-f"></div>
-          <div class="wk-leg-b"></div>
+          <div class="wk-legs">
+            <div class="wk-leg-f"></div>
+            <div class="wk-leg-b"></div>
+          </div>
         </div>
-        <text class="steps-digit">{{stepsText}}</text>
+        <text class="steps-digit" for="{{stepsChars}}" style="color: {{$item.color}}">{{$item.ch}}</text>
       </div>
     </div>
   </div>
@@ -26,6 +28,14 @@
 const FRAME_COUNT = 50
 const FRAME_MS = 100
 const STEPS_MS = 10000
+const STEPS_DEFAULT = 8000
+const GRADIENT_STOPS = [
+  [0x9a, 0xd9, 0xff],
+  [0xb9, 0xe8, 0xc8],
+  [0xf4, 0xe7, 0x9e],
+  [0xff, 0xde, 0x6e],
+  [0xff, 0xd0, 0x28],
+]
 
 export default {
   props: [],
@@ -35,12 +45,13 @@ export default {
       stepsTimerId: -1,
       frameIdx: 1,
       timeChars: ['0', '0', ':', '0', '0'],
-      stepsText: '0',
+      stepsChars: [],
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
     }
   },
 
   onInit() {
+    this.setSteps(STEPS_DEFAULT)
     this.updateTime()
     this.initSteps()
     this.timerId = setInterval(() => {
@@ -70,7 +81,6 @@ export default {
 
   updateSteps() {
     if (!this._health || !this._health.getRecentSamples) {
-      this.setSteps(0)
       return
     }
     try {
@@ -78,17 +88,36 @@ export default {
         dataType: ['STEP_COUNT'],
         success: (data) => {
           const v = data && data.data && data.data.value
-          this.setSteps(Math.round(Number(v)) || 0)
+          if (v !== undefined && v !== null && !isNaN(Number(v))) {
+            this.setSteps(Math.round(Number(v)))
+          }
         },
-        fail: () => this.setSteps(0),
       })
-    } catch (e) {
-      this.setSteps(0)
-    }
+    } catch (e) {}
   },
 
   setSteps(n) {
-    this.stepsText = '' + n
+    const s = '' + n
+    const colors = this.gradientColors(s.length)
+    this.stepsChars = s.split('').map((ch, i) => ({ ch: ch, color: colors[i] }))
+  },
+
+  gradientColors(n) {
+    const stops = GRADIENT_STOPS
+    const colors = []
+    for (let i = 0; i < n; i++) {
+      const t = n === 1 ? 0.5 : i / (n - 1)
+      const p = t * (stops.length - 1)
+      const k = Math.min(stops.length - 2, Math.floor(p))
+      const f = p - k
+      const a = stops[k]
+      const b = stops[k + 1]
+      const r = Math.round(a[0] + (b[0] - a[0]) * f)
+      const g = Math.round(a[1] + (b[1] - a[1]) * f)
+      const b2 = Math.round(a[2] + (b[2] - a[2]) * f)
+      colors.push('rgb(' + r + ', ' + g + ', ' + b2 + ')')
+    }
+    return colors
   },
 
   onDestroy() {
@@ -161,60 +190,52 @@ export default {
     }
 
     .walker {
-      position: relative;
-      width: 40px;
-      height: 52px;
+      flex-direction: column;
+      align-items: center;
       margin-right: 10px;
       margin-bottom: 2px;
     }
 
     .wk-head {
-      position: absolute;
-      background-color: #ffffff;
+      background-color: #9ad9ff;
       width: 13px;
       height: 13px;
       border-radius: 50%;
-      left: 14px;
-      top: 0;
     }
 
     .wk-body {
-      position: absolute;
-      background-color: #ffffff;
+      background-color: #b9e8c8;
       width: 11px;
-      height: 22px;
+      height: 20px;
       border-radius: 5px;
-      left: 15px;
-      top: 15px;
+      margin-top: 2px;
       transform: rotate(10deg);
     }
 
+    .wk-legs {
+      flex-direction: row;
+    }
+
     .wk-leg-f {
-      position: absolute;
-      background-color: #ffffff;
-      width: 9px;
-      height: 20px;
+      background-color: #f4e79e;
+      width: 8px;
+      height: 18px;
       border-radius: 4px;
-      left: 21px;
-      top: 33px;
-      transform: rotate(30deg);
+      transform: rotate(28deg);
     }
 
     .wk-leg-b {
-      position: absolute;
-      background-color: #ffffff;
-      width: 9px;
+      background-color: #ffd028;
+      width: 8px;
       height: 18px;
       border-radius: 4px;
-      left: 10px;
-      top: 33px;
-      transform: rotate(-32deg);
+      margin-left: 3px;
+      transform: rotate(-28deg);
     }
 
     .steps-digit {
       font-size: 44px;
       font-weight: bold;
-      color: #ffffff;
     }
   }
 }
