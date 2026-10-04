@@ -35,7 +35,7 @@ export default {
 
   updateTime() {
     const t = new Date()
-    this.timeStr = this.pad(t.getHours()) + ':' + this.pad(t.getMinutes())
+    this.timeStr = this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())
   },
 
   onDestroy() {
@@ -44,6 +44,10 @@ export default {
 
   pad(n) {
     return n < 10 ? '00' + n : n < 100 ? '0' + n : '' + n
+  },
+
+  pad2(n) {
+    return n < 10 ? '0' + n : '' + n
   },
 }
 </script>
@@ -68,7 +72,7 @@ export default {
 
     .time-wrap {
       position: absolute;
-      top: 66px;
+      top: 20px;
       left: 0;
       width: 100%;
       flex-direction: row;
@@ -76,12 +80,9 @@ export default {
     }
 
     .time {
-      background-color: rgba(8, 20, 38, 0.45);
       color: #ffd76a;
-      font-size: 84px;
+      font-size: 56px;
       font-weight: bold;
-      padding: 6px 30px;
-      border-radius: 46px;
     }
   }
 }
@@ -100,7 +101,7 @@ export default {
       }
 
       .time-wrap {
-        top: 60px;
+        top: 14px;
       }
     }
   }
