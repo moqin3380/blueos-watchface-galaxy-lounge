@@ -188,14 +188,14 @@ export default {
     }
 
     .tdigit {
-      width: 98px;
-      height: 140px;
+      width: 96px;
+      height: 176px;
       object-fit: contain;
     }
 
     .tcolon {
-      width: 62px;
-      height: 140px;
+      width: 42px;
+      height: 120px;
       background-image: url("./assets/glass/g_colon.png");
       background-size: contain;
       background-repeat: no-repeat;
