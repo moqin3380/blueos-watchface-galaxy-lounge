@@ -1,0 +1,122 @@
+<template>
+  <div class="wrap">
+    <div class="container">
+      <image class="bg" src="{{bgUrl}}" />
+    </div>
+  </div>
+</template>
+
+<script>
+const FRAME_COUNT = 50
+const FRAME_MS = 100
+
+export default {
+  props: [],
+  data() {
+    return {
+      timerId: -1,
+      frameIdx: 1,
+      bgUrl: '/watch3001/assets/frames/frame_001.jpg',
+    }
+  },
+
+  onInit() {
+    this.timerId = setInterval(() => {
+      this.frameIdx = this.frameIdx >= FRAME_COUNT ? 1 : this.frameIdx + 1
+      this.bgUrl = '/watch3001/assets/frames/frame_' + this.pad(this.frameIdx) + '.jpg'
+    }, FRAME_MS)
+  },
+
+  onDestroy() {
+    clearInterval(this.timerId)
+  },
+
+  pad(n) {
+    return n < 10 ? '00' + n : n < 100 ? '0' + n : '' + n
+  },
+}
+</script>
+
+<style lang="less">
+.wrap {
+  height: 466px;
+  width: 466px;
+  .container {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-image: url("./assets/wallpaper.jpg");
+    background-size: cover;
+
+    .bg {
+      width: 466px;
+      height: 466px;
+    }
+  }
+}
+
+@media screen and (device: watch-square) {
+  .wrap {
+    height: 100%;
+    width: 100%;
+    .container {
+      .bg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+/* 以下规则仅用于让编译器把帧资源打进安装包,运行时不使用 */
+.f001 { background-image: url("./assets/frames/frame_001.jpg"); }
+.f002 { background-image: url("./assets/frames/frame_002.jpg"); }
+.f003 { background-image: url("./assets/frames/frame_003.jpg"); }
+.f004 { background-image: url("./assets/frames/frame_004.jpg"); }
+.f005 { background-image: url("./assets/frames/frame_005.jpg"); }
+.f006 { background-image: url("./assets/frames/frame_006.jpg"); }
+.f007 { background-image: url("./assets/frames/frame_007.jpg"); }
+.f008 { background-image: url("./assets/frames/frame_008.jpg"); }
+.f009 { background-image: url("./assets/frames/frame_009.jpg"); }
+.f010 { background-image: url("./assets/frames/frame_010.jpg"); }
+.f011 { background-image: url("./assets/frames/frame_011.jpg"); }
+.f012 { background-image: url("./assets/frames/frame_012.jpg"); }
+.f013 { background-image: url("./assets/frames/frame_013.jpg"); }
+.f014 { background-image: url("./assets/frames/frame_014.jpg"); }
+.f015 { background-image: url("./assets/frames/frame_015.jpg"); }
+.f016 { background-image: url("./assets/frames/frame_016.jpg"); }
+.f017 { background-image: url("./assets/frames/frame_017.jpg"); }
+.f018 { background-image: url("./assets/frames/frame_018.jpg"); }
+.f019 { background-image: url("./assets/frames/frame_019.jpg"); }
+.f020 { background-image: url("./assets/frames/frame_020.jpg"); }
+.f021 { background-image: url("./assets/frames/frame_021.jpg"); }
+.f022 { background-image: url("./assets/frames/frame_022.jpg"); }
+.f023 { background-image: url("./assets/frames/frame_023.jpg"); }
+.f024 { background-image: url("./assets/frames/frame_024.jpg"); }
+.f025 { background-image: url("./assets/frames/frame_025.jpg"); }
+.f026 { background-image: url("./assets/frames/frame_026.jpg"); }
+.f027 { background-image: url("./assets/frames/frame_027.jpg"); }
+.f028 { background-image: url("./assets/frames/frame_028.jpg"); }
+.f029 { background-image: url("./assets/frames/frame_029.jpg"); }
+.f030 { background-image: url("./assets/frames/frame_030.jpg"); }
+.f031 { background-image: url("./assets/frames/frame_031.jpg"); }
+.f032 { background-image: url("./assets/frames/frame_032.jpg"); }
+.f033 { background-image: url("./assets/frames/frame_033.jpg"); }
+.f034 { background-image: url("./assets/frames/frame_034.jpg"); }
+.f035 { background-image: url("./assets/frames/frame_035.jpg"); }
+.f036 { background-image: url("./assets/frames/frame_036.jpg"); }
+.f037 { background-image: url("./assets/frames/frame_037.jpg"); }
+.f038 { background-image: url("./assets/frames/frame_038.jpg"); }
+.f039 { background-image: url("./assets/frames/frame_039.jpg"); }
+.f040 { background-image: url("./assets/frames/frame_040.jpg"); }
+.f041 { background-image: url("./assets/frames/frame_041.jpg"); }
+.f042 { background-image: url("./assets/frames/frame_042.jpg"); }
+.f043 { background-image: url("./assets/frames/frame_043.jpg"); }
+.f044 { background-image: url("./assets/frames/frame_044.jpg"); }
+.f045 { background-image: url("./assets/frames/frame_045.jpg"); }
+.f046 { background-image: url("./assets/frames/frame_046.jpg"); }
+.f047 { background-image: url("./assets/frames/frame_047.jpg"); }
+.f048 { background-image: url("./assets/frames/frame_048.jpg"); }
+.f049 { background-image: url("./assets/frames/frame_049.jpg"); }
+.f050 { background-image: url("./assets/frames/frame_050.jpg"); }
+</style>
