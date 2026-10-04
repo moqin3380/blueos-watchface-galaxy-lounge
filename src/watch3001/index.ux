@@ -10,14 +10,7 @@
         <text class="time c4">{{timeChars[4]}}</text>
       </div>
       <div class="steps-wrap">
-        <div class="walker">
-          <div class="wk-head"></div>
-          <div class="wk-body"></div>
-          <div class="wk-legs">
-            <div class="wk-leg-f"></div>
-            <div class="wk-leg-b"></div>
-          </div>
-        </div>
+        <image class="steps-icon" src="./assets/icon_walk.png" />
         <text class="steps-digit" for="{{stepsChars}}" style="color: {{$item.color}}">{{$item.ch}}</text>
       </div>
     </div>
@@ -189,48 +182,11 @@ export default {
       padding-bottom: 40px;
     }
 
-    .walker {
-      flex-direction: column;
-      align-items: center;
-      margin-right: 10px;
-      margin-bottom: 2px;
-    }
-
-    .wk-head {
-      background-color: #9ad9ff;
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-    }
-
-    .wk-body {
-      background-color: #b9e8c8;
-      width: 11px;
-      height: 20px;
-      border-radius: 5px;
-      margin-top: 2px;
-      transform: rotate(10deg);
-    }
-
-    .wk-legs {
-      flex-direction: row;
-    }
-
-    .wk-leg-f {
-      background-color: #f4e79e;
-      width: 8px;
-      height: 18px;
-      border-radius: 4px;
-      transform: rotate(28deg);
-    }
-
-    .wk-leg-b {
-      background-color: #ffd028;
-      width: 8px;
-      height: 18px;
-      border-radius: 4px;
-      margin-left: 3px;
-      transform: rotate(-28deg);
+    .steps-icon {
+      width: 36px;
+      height: 36px;
+      margin-right: 9px;
+      margin-bottom: 6px;
     }
 
     .steps-digit {
