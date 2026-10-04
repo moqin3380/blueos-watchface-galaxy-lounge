@@ -3,7 +3,14 @@
     <div class="container">
       <image class="bg" src="{{bgUrl}}" />
       <div class="date-wrap">
-        <text class="date">{{dateStr}}</text>
+        <image class="dchar dcn" src="/watch3001/assets/glass/blue/c_zhou.png" />
+        <image class="dchar dcn" src="{{dateSrc1}}" />
+        <div class="dgap"></div>
+        <image class="dchar ddg" src="{{dateSrc2}}" />
+        <image class="dchar ddg" src="{{dateSrc3}}" />
+        <div class="dchar ddot"></div>
+        <image class="dchar ddg" src="{{dateSrc4}}" />
+        <image class="dchar ddg" src="{{dateSrc5}}" />
       </div>
       <div class="time-wrap">
         <image class="tdigit" src="{{slotSrc0}}" />
@@ -15,17 +22,22 @@
       <div class="steps-wrap">
         <div class="steps-group">
           <div class="steps-icon"></div>
-          <div class="steps-col">
-            <text class="steps-label">今日步数</text>
-            <div class="steps-row">
-              <text class="steps-digit s0">{{stepsChars[0]}}</text>
-              <text class="steps-digit s1">{{stepsChars[1]}}</text>
-              <text class="steps-digit s2">{{stepsChars[2]}}</text>
-              <text class="steps-digit s3">{{stepsChars[3]}}</text>
-              <text class="steps-digit s4">{{stepsChars[4]}}</text>
-              <text class="steps-digit s5">{{stepsChars[5]}}</text>
-            </div>
+        <div class="steps-col">
+          <div class="steps-label">
+            <image class="lchar" src="/watch3001/assets/glass/gold/c_jin.png" />
+            <image class="lchar" src="/watch3001/assets/glass/gold/c_ri.png" />
+            <image class="lchar" src="/watch3001/assets/glass/gold/c_bu.png" />
+            <image class="lchar" src="/watch3001/assets/glass/gold/c_shu.png" />
           </div>
+          <div class="steps-row">
+            <image class="schar" if="{{stepsShow0}}" src="{{stepsImg0}}" />
+            <image class="schar" if="{{stepsShow1}}" src="{{stepsImg1}}" />
+            <image class="schar" if="{{stepsShow2}}" src="{{stepsImg2}}" />
+            <image class="schar" if="{{stepsShow3}}" src="{{stepsImg3}}" />
+            <image class="schar" if="{{stepsShow4}}" src="{{stepsImg4}}" />
+            <image class="schar" if="{{stepsShow5}}" src="{{stepsImg5}}" />
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -37,7 +49,7 @@ const FRAME_COUNT = 50
 const FRAME_MS = 100
 const STEPS_MS = 10000
 const STEPS_DEFAULT = 8000
-const WEEK_DAYS = ['日', '一', '二', '三', '四', '五', '六']
+const WEEK_FILES = ['c_ri', 'c_yi', 'c_er', 'c_san', 'c_si', 'c_wu', 'c_liu']
 
 export default {
   props: [],
@@ -46,13 +58,27 @@ export default {
       timerId: -1,
       stepsTimerId: -1,
       frameIdx: 1,
-      timeChars: ['0', '0', ':', '0', '0'],
       slotSrc0: '/watch3001/assets/glass/blue/g_0.png',
       slotSrc1: '/watch3001/assets/glass/mint/g_0.png',
       slotSrc3: '/watch3001/assets/glass/lgold/g_0.png',
       slotSrc4: '/watch3001/assets/glass/gold/g_0.png',
-      dateStr: '',
-      stepsChars: ['8', '0', '0', '0', '', ''],
+      dateSrc1: '/watch3001/assets/glass/blue/c_ri.png',
+      dateSrc2: '/watch3001/assets/glass/blue/g_1.png',
+      dateSrc3: '/watch3001/assets/glass/blue/g_0.png',
+      dateSrc4: '/watch3001/assets/glass/blue/g_0.png',
+      dateSrc5: '/watch3001/assets/glass/blue/g_4.png',
+      stepsImg0: '/watch3001/assets/glass/gold/g_8.png',
+      stepsImg1: '/watch3001/assets/glass/gold/g_0.png',
+      stepsImg2: '/watch3001/assets/glass/gold/g_0.png',
+      stepsImg3: '/watch3001/assets/glass/gold/g_0.png',
+      stepsImg4: '/watch3001/assets/glass/none.png',
+      stepsImg5: '/watch3001/assets/glass/none.png',
+      stepsShow0: true,
+      stepsShow1: true,
+      stepsShow2: true,
+      stepsShow3: true,
+      stepsShow4: false,
+      stepsShow5: false,
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
     }
   },
@@ -75,7 +101,24 @@ export default {
     this.setSlot(1, s.charAt(1))
     this.setSlot(3, s.charAt(3))
     this.setSlot(4, s.charAt(4))
-    this.dateStr = '周' + WEEK_DAYS[t.getDay()] + '  ' + this.pad2(t.getMonth() + 1) + '.' + this.pad2(t.getDate())
+    this.setDate(t)
+  },
+
+  setDate(t) {
+    this.setDateChar(1, WEEK_FILES[t.getDay()])
+    const mm = this.pad2(t.getMonth() + 1)
+    const dd = this.pad2(t.getDate())
+    this.setDateChar(2, 'g_' + mm.charAt(0))
+    this.setDateChar(3, 'g_' + mm.charAt(1))
+    this.setDateChar(4, 'g_' + dd.charAt(0))
+    this.setDateChar(5, 'g_' + dd.charAt(1))
+  },
+
+  setDateChar(i, name) {
+    const src = '/watch3001/assets/glass/blue/' + name + '.png'
+    if (this['dateSrc' + i] !== src) {
+      this['dateSrc' + i] = src
+    }
   },
 
   setSlot(i, ch) {
@@ -118,11 +161,16 @@ export default {
 
   setSteps(n) {
     const s = '' + n
-    const chars = []
     for (let i = 0; i < 6; i++) {
-      chars.push(i < s.length ? s.charAt(i) : '')
+      const has = i < s.length
+      this['stepsShow' + i] = has
+      if (has) {
+        const src = '/watch3001/assets/glass/gold/g_' + s.charAt(i) + '.png'
+        if (this['stepsImg' + i] !== src) {
+          this['stepsImg' + i] = src
+        }
+      }
     }
-    this.stepsChars = chars
   },
 
   onDestroy() {
@@ -170,10 +218,33 @@ export default {
       padding-top: 36px;
     }
 
-    .date {
-      font-size: 34px;
-      color: #ffffff;
-      opacity: 0.9;
+    .dchar {
+      object-fit: contain;
+      margin-right: 2px;
+    }
+
+    .dcn {
+      width: 36px;
+      height: 36px;
+    }
+
+    .ddg {
+      width: 18px;
+      height: 36px;
+    }
+
+    .ddot {
+      width: 12px;
+      height: 36px;
+      background-image: url("./assets/glass/blue/c_dot.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .dgap {
+      width: 14px;
+      height: 36px;
     }
 
     .time-wrap {
@@ -235,26 +306,29 @@ export default {
     }
 
     .steps-label {
-      font-size: 26px;
-      color: #b9e8c8;
+      flex-direction: row;
+      align-items: center;
       margin-bottom: 6px;
+    }
+
+    .lchar {
+      width: 30px;
+      height: 30px;
+      margin-right: 3px;
+      object-fit: contain;
     }
 
     .steps-row {
       flex-direction: row;
+      align-items: flex-end;
     }
 
-    .steps-digit {
-      font-size: 48px;
-      font-weight: bold;
+    .schar {
+      width: 32px;
+      height: 64px;
+      margin-right: 1px;
+      object-fit: contain;
     }
-
-    .s0 { color: #9ad9ff; }
-    .s1 { color: #b9e8c8; }
-    .s2 { color: #f4e79e; }
-    .s3 { color: #ffd028; }
-    .s4 { color: #ffd028; }
-    .s5 { color: #ffd028; }
   }
 }
 
