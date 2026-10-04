@@ -8,7 +8,7 @@
       <div class="time-wrap">
         <image class="tdigit" src="{{slotSrc0}}" />
         <image class="tdigit" src="{{slotSrc1}}" />
-        <image class="tcolon" src="{{slotSrc2}}" />
+        <div class="tcolon"></div>
         <image class="tdigit" src="{{slotSrc3}}" />
         <image class="tdigit" src="{{slotSrc4}}" />
       </div>
@@ -49,7 +49,6 @@ export default {
       timeChars: ['0', '0', ':', '0', '0'],
       slotSrc0: '/watch3001/assets/glass/g_0.png',
       slotSrc1: '/watch3001/assets/glass/g_0.png',
-      slotSrc2: '/watch3001/assets/glass/g_colon.png',
       slotSrc3: '/watch3001/assets/glass/g_0.png',
       slotSrc4: '/watch3001/assets/glass/g_0.png',
       dateStr: '',
@@ -74,7 +73,6 @@ export default {
     const s = this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())
     this.setSlot(0, s.charAt(0))
     this.setSlot(1, s.charAt(1))
-    this.setSlot(2, s.charAt(2))
     this.setSlot(3, s.charAt(3))
     this.setSlot(4, s.charAt(4))
     this.dateStr = '周' + WEEK_DAYS[t.getDay()] + '  ' + this.pad2(t.getMonth() + 1) + '.' + this.pad2(t.getDate())
@@ -190,15 +188,18 @@ export default {
     }
 
     .tdigit {
-      width: 92px;
-      height: 132px;
+      width: 98px;
+      height: 140px;
       object-fit: contain;
     }
 
     .tcolon {
-      width: 42px;
-      height: 132px;
-      object-fit: contain;
+      width: 62px;
+      height: 140px;
+      background-image: url("./assets/glass/g_colon.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     .steps-wrap {
