@@ -16,11 +16,6 @@
 3. 打开 `src/watch3001/index.ux`,点击预览图标即可在模拟器实时预览;
 4. 顶部工具栏「打包」可生成 rpk 安装包(debug 免签名,release 需签名)。
 
-## 安装到手表
-
-- **正式渠道**:在 [vivo 开放平台](https://developers.vivo.com) 上传 release rpk,审核通过后从手表表盘市场安装;
-- **真机调试**:手表若开放了 USB 调试/开发者模式,可用 BlueOS Studio 的真机调试直接推送(以官方最新文档为准)。
-
 ## 目录结构
 
 ```
