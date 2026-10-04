@@ -76,9 +76,15 @@ export default {
 
     .time-wrap {
       position: absolute;
-      top: 40px;
-      left: 110px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding-top: 40px;
+      padding-left: 110px;
     }
 
     .time {
@@ -86,11 +92,11 @@ export default {
       font-weight: bold;
     }
 
-    .c0 { color: #b3e5ff; }
-    .c1 { color: #c6e7e6; }
-    .c2 { color: #d9e9ce; }
-    .c3 { color: #ececb5; }
-    .c4 { color: #ffee9c; }
+    .c0 { color: #9ad9ff; }
+    .c1 { color: #b9e8c8; }
+    .c2 { color: #f4e79e; }
+    .c3 { color: #ffde6e; }
+    .c4 { color: #ffd028; }
   }
 }
 
@@ -108,8 +114,8 @@ export default {
       }
 
       .time-wrap {
-        top: 12px;
-        left: 24px;
+        padding-top: 12px;
+        padding-left: 24px;
       }
     }
   }
