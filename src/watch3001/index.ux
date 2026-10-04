@@ -10,12 +10,13 @@
         <text class="time c4">{{timeChars[4]}}</text>
       </div>
       <div class="steps-wrap">
-        <div class="steps-icon">
-          <div class="foot f1"></div>
-          <div class="foot f2"></div>
+        <div class="walker">
+          <div class="wk-head"></div>
+          <div class="wk-body"></div>
+          <div class="wk-leg-f"></div>
+          <div class="wk-leg-b"></div>
         </div>
-        <text class="steps-digit" for="{{stepsChars}}" style="color: {{$item.color}}">{{$item.ch}}</text>
-        <text class="steps-unit">步</text>
+        <text class="steps-digit">{{stepsText}}</text>
       </div>
     </div>
   </div>
@@ -25,8 +26,6 @@
 const FRAME_COUNT = 50
 const FRAME_MS = 100
 const STEPS_MS = 10000
-const GRADIENT_FROM = [0x9a, 0xd9, 0xff]
-const GRADIENT_TO = [0xff, 0xd0, 0x28]
 
 export default {
   props: [],
@@ -36,7 +35,7 @@ export default {
       stepsTimerId: -1,
       frameIdx: 1,
       timeChars: ['0', '0', ':', '0', '0'],
-      stepsChars: [{ ch: '0', color: '#cdd4a3' }],
+      stepsText: '0',
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
     }
   },
@@ -89,21 +88,7 @@ export default {
   },
 
   setSteps(n) {
-    const s = '' + n
-    const colors = this.gradientColors(s.length)
-    this.stepsChars = s.split('').map((ch, i) => ({ ch: ch, color: colors[i] }))
-  },
-
-  gradientColors(n) {
-    const colors = []
-    for (let i = 0; i < n; i++) {
-      const t = n === 1 ? 0.5 : i / (n - 1)
-      const r = Math.round(GRADIENT_FROM[0] + (GRADIENT_TO[0] - GRADIENT_FROM[0]) * t)
-      const g = Math.round(GRADIENT_FROM[1] + (GRADIENT_TO[1] - GRADIENT_FROM[1]) * t)
-      const b = Math.round(GRADIENT_FROM[2] + (GRADIENT_TO[2] - GRADIENT_FROM[2]) * t)
-      colors.push('rgb(' + r + ', ' + g + ', ' + b + ')')
-    }
-    return colors
+    this.stepsText = '' + n
   },
 
   onDestroy() {
@@ -175,41 +160,61 @@ export default {
       padding-bottom: 40px;
     }
 
-    .steps-icon {
-      flex-direction: row;
-      align-items: flex-end;
-      margin-right: 8px;
-      margin-bottom: 10px;
+    .walker {
+      position: relative;
+      width: 40px;
+      height: 52px;
+      margin-right: 10px;
+      margin-bottom: 2px;
     }
 
-    .foot {
-      width: 9px;
-      height: 17px;
+    .wk-head {
+      position: absolute;
+      background-color: #ffffff;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      left: 14px;
+      top: 0;
+    }
+
+    .wk-body {
+      position: absolute;
+      background-color: #ffffff;
+      width: 11px;
+      height: 22px;
       border-radius: 5px;
+      left: 15px;
+      top: 15px;
+      transform: rotate(10deg);
     }
 
-    .f1 {
-      background-color: #9ad9ff;
-      transform: rotate(-14deg);
+    .wk-leg-f {
+      position: absolute;
+      background-color: #ffffff;
+      width: 9px;
+      height: 20px;
+      border-radius: 4px;
+      left: 21px;
+      top: 33px;
+      transform: rotate(30deg);
     }
 
-    .f2 {
-      background-color: #ffd028;
-      transform: rotate(12deg);
-      margin-left: 4px;
+    .wk-leg-b {
+      position: absolute;
+      background-color: #ffffff;
+      width: 9px;
+      height: 18px;
+      border-radius: 4px;
+      left: 10px;
+      top: 33px;
+      transform: rotate(-32deg);
     }
 
     .steps-digit {
       font-size: 44px;
       font-weight: bold;
-    }
-
-    .steps-unit {
-      font-size: 24px;
-      color: #eef4ff;
-      opacity: 0.75;
-      margin-left: 5px;
-      margin-bottom: 8px;
+      color: #ffffff;
     }
   }
 }
