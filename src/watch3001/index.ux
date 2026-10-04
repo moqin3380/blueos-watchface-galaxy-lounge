@@ -6,11 +6,11 @@
         <text class="date">{{dateStr}}</text>
       </div>
       <div class="time-wrap">
-        <text class="time">{{timeChars[0]}}</text>
-        <text class="time">{{timeChars[1]}}</text>
-        <text class="time">{{timeChars[2]}}</text>
-        <text class="time">{{timeChars[3]}}</text>
-        <text class="time">{{timeChars[4]}}</text>
+        <image class="tdigit" src="{{slotSrc0}}" />
+        <image class="tdigit" src="{{slotSrc1}}" />
+        <image class="tcolon" src="{{slotSrc2}}" />
+        <image class="tdigit" src="{{slotSrc3}}" />
+        <image class="tdigit" src="{{slotSrc4}}" />
       </div>
       <div class="steps-wrap">
         <div class="steps-group">
@@ -47,6 +47,11 @@ export default {
       stepsTimerId: -1,
       frameIdx: 1,
       timeChars: ['0', '0', ':', '0', '0'],
+      slotSrc0: '/watch3001/assets/glass/g_0.png',
+      slotSrc1: '/watch3001/assets/glass/g_0.png',
+      slotSrc2: '/watch3001/assets/glass/g_colon.png',
+      slotSrc3: '/watch3001/assets/glass/g_0.png',
+      slotSrc4: '/watch3001/assets/glass/g_0.png',
       dateStr: '',
       stepsChars: ['8', '0', '0', '0', '', ''],
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
@@ -66,8 +71,21 @@ export default {
 
   updateTime() {
     const t = new Date()
-    this.timeChars = (this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())).split('')
+    const s = this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())
+    this.setSlot(0, s.charAt(0))
+    this.setSlot(1, s.charAt(1))
+    this.setSlot(2, s.charAt(2))
+    this.setSlot(3, s.charAt(3))
+    this.setSlot(4, s.charAt(4))
     this.dateStr = '周' + WEEK_DAYS[t.getDay()] + '  ' + this.pad2(t.getMonth() + 1) + '.' + this.pad2(t.getDate())
+  },
+
+  setSlot(i, ch) {
+    const name = ch === ':' ? 'colon' : ch
+    const src = '/watch3001/assets/glass/g_' + name + '.png'
+    if (this['slotSrc' + i] !== src) {
+      this['slotSrc' + i] = src
+    }
   },
 
   initSteps() {
@@ -171,10 +189,16 @@ export default {
       justify-content: center;
     }
 
-    .time {
-      color: rgba(255, 255, 255, 0.42);
-      font-size: 150px;
-      font-weight: bold;
+    .tdigit {
+      width: 92px;
+      height: 132px;
+      object-fit: contain;
+    }
+
+    .tcolon {
+      width: 42px;
+      height: 132px;
+      object-fit: contain;
     }
 
     .steps-wrap {
@@ -307,5 +331,18 @@ export default {
 .f047 { background-image: url("./assets/frames/frame_047.jpg"); }
 .f048 { background-image: url("./assets/frames/frame_048.jpg"); }
 .f049 { background-image: url("./assets/frames/frame_049.jpg"); }
-.f050 { background-image: url("./assets/frames/frame_050.jpg"); }
+    .f050 { background-image: url("./assets/frames/frame_050.jpg"); }
+
+    /* 以下规则仅用于让编译器把玻璃数字资源打进安装包,运行时不使用 */
+    .g0 { background-image: url("./assets/glass/g_0.png"); }
+    .g1 { background-image: url("./assets/glass/g_1.png"); }
+    .g2 { background-image: url("./assets/glass/g_2.png"); }
+    .g3 { background-image: url("./assets/glass/g_3.png"); }
+    .g4 { background-image: url("./assets/glass/g_4.png"); }
+    .g5 { background-image: url("./assets/glass/g_5.png"); }
+    .g6 { background-image: url("./assets/glass/g_6.png"); }
+    .g7 { background-image: url("./assets/glass/g_7.png"); }
+    .g8 { background-image: url("./assets/glass/g_8.png"); }
+    .g9 { background-image: url("./assets/glass/g_9.png"); }
+    .gcolon { background-image: url("./assets/glass/g_colon.png"); }
 </style>
