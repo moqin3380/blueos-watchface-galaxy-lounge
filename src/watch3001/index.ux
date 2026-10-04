@@ -2,6 +2,9 @@
   <div class="wrap">
     <div class="container">
       <image class="bg" src="{{bgUrl}}" />
+      <div class="time-wrap">
+        <text class="time">{{timeStr}}</text>
+      </div>
     </div>
   </div>
 </template>
@@ -16,15 +19,23 @@ export default {
     return {
       timerId: -1,
       frameIdx: 1,
+      timeStr: '',
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
     }
   },
 
   onInit() {
+    this.updateTime()
     this.timerId = setInterval(() => {
       this.frameIdx = this.frameIdx >= FRAME_COUNT ? 1 : this.frameIdx + 1
       this.bgUrl = '/watch3001/assets/frames/frame_' + this.pad(this.frameIdx) + '.jpg'
+      this.updateTime()
     }, FRAME_MS)
+  },
+
+  updateTime() {
+    const t = new Date()
+    this.timeStr = this.pad(t.getHours()) + ':' + this.pad(t.getMinutes())
   },
 
   onDestroy() {
@@ -54,6 +65,24 @@ export default {
       border-radius: 50%;
       object-fit: cover;
     }
+
+    .time-wrap {
+      position: absolute;
+      top: 66px;
+      left: 0;
+      width: 100%;
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .time {
+      background-color: rgba(8, 20, 38, 0.45);
+      color: #ffd76a;
+      font-size: 84px;
+      font-weight: bold;
+      padding: 6px 30px;
+      border-radius: 46px;
+    }
   }
 }
 
@@ -68,6 +97,10 @@ export default {
         height: 100%;
         border-radius: 0;
         object-fit: cover;
+      }
+
+      .time-wrap {
+        top: 60px;
       }
     }
   }
