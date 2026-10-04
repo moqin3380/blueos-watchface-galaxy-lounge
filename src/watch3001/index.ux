@@ -10,7 +10,11 @@
         <text class="time c4">{{timeChars[4]}}</text>
       </div>
       <div class="steps-wrap">
-        <text class="time" for="{{stepsChars}}" style="color: {{$item.color}}">{{$item.ch}}</text>
+        <div class="steps-icon">
+          <div class="foot f1"></div>
+          <div class="foot f2"></div>
+        </div>
+        <text class="steps-digit" for="{{stepsChars}}" style="color: {{$item.color}}">{{$item.ch}}</text>
         <text class="steps-unit">步</text>
       </div>
     </div>
@@ -18,8 +22,6 @@
 </template>
 
 <script>
-import health from '@blueos.health.health'
-
 const FRAME_COUNT = 50
 const FRAME_MS = 100
 const STEPS_MS = 10000
@@ -41,15 +43,12 @@ export default {
 
   onInit() {
     this.updateTime()
-    this.updateSteps()
+    this.initSteps()
     this.timerId = setInterval(() => {
       this.frameIdx = this.frameIdx >= FRAME_COUNT ? 1 : this.frameIdx + 1
       this.bgUrl = '/watch3001/assets/frames/frame_' + this.pad(this.frameIdx) + '.jpg'
       this.updateTime()
     }, FRAME_MS)
-    this.stepsTimerId = setInterval(() => {
-      this.updateSteps()
-    }, STEPS_MS)
   },
 
   updateTime() {
@@ -57,15 +56,36 @@ export default {
     this.timeChars = (this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())).split('')
   },
 
+  initSteps() {
+    try {
+      const app = typeof this.$app === 'function' ? this.$app() : this.$app
+      this._health = app && app.requireFeature ? app.requireFeature('blueos.health.health') : null
+    } catch (e) {
+      this._health = null
+    }
+    this.updateSteps()
+    this.stepsTimerId = setInterval(() => {
+      this.updateSteps()
+    }, STEPS_MS)
+  },
+
   updateSteps() {
-    health.getRecentSamples({
-      dataType: ['STEP_COUNT'],
-      success: (data) => {
-        const v = data && data.data && data.data.value
-        this.setSteps(Math.round(Number(v)) || 0)
-      },
-      fail: () => this.setSteps(0),
-    })
+    if (!this._health || !this._health.getRecentSamples) {
+      this.setSteps(0)
+      return
+    }
+    try {
+      this._health.getRecentSamples({
+        dataType: ['STEP_COUNT'],
+        success: (data) => {
+          const v = data && data.data && data.data.value
+          this.setSteps(Math.round(Number(v)) || 0)
+        },
+        fail: () => this.setSteps(0),
+      })
+    } catch (e) {
+      this.setSteps(0)
+    }
   },
 
   setSteps(n) {
@@ -151,16 +171,45 @@ export default {
       height: 100%;
       flex-direction: row;
       align-items: flex-end;
-      justify-content: flex-end;
+      justify-content: center;
       padding-bottom: 40px;
-      padding-right: 110px;
+    }
+
+    .steps-icon {
+      flex-direction: row;
+      align-items: flex-end;
+      margin-right: 8px;
+      margin-bottom: 10px;
+    }
+
+    .foot {
+      width: 9px;
+      height: 17px;
+      border-radius: 5px;
+    }
+
+    .f1 {
+      background-color: #9ad9ff;
+      transform: rotate(-14deg);
+    }
+
+    .f2 {
+      background-color: #ffd028;
+      transform: rotate(12deg);
+      margin-left: 4px;
+    }
+
+    .steps-digit {
+      font-size: 44px;
+      font-weight: bold;
     }
 
     .steps-unit {
-      font-size: 26px;
+      font-size: 24px;
       color: #eef4ff;
       opacity: 0.75;
-      margin-left: 6px;
+      margin-left: 5px;
+      margin-bottom: 8px;
     }
   }
 }
@@ -185,7 +234,6 @@ export default {
 
       .steps-wrap {
         padding-bottom: 12px;
-        padding-right: 24px;
       }
     }
   }
