@@ -47,10 +47,10 @@ export default {
       stepsTimerId: -1,
       frameIdx: 1,
       timeChars: ['0', '0', ':', '0', '0'],
-      slotSrc0: '/watch3001/assets/glass/g_0.png',
-      slotSrc1: '/watch3001/assets/glass/g_0.png',
-      slotSrc3: '/watch3001/assets/glass/g_0.png',
-      slotSrc4: '/watch3001/assets/glass/g_0.png',
+      slotSrc0: '/watch3001/assets/glass/blue/g_0.png',
+      slotSrc1: '/watch3001/assets/glass/mint/g_0.png',
+      slotSrc3: '/watch3001/assets/glass/lgold/g_0.png',
+      slotSrc4: '/watch3001/assets/glass/gold/g_0.png',
       dateStr: '',
       stepsChars: ['8', '0', '0', '0', '', ''],
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
@@ -79,8 +79,8 @@ export default {
   },
 
   setSlot(i, ch) {
-    const name = ch === ':' ? 'colon' : ch
-    const src = '/watch3001/assets/glass/g_' + name + '.png'
+    const dirs = { 0: 'blue', 1: 'mint', 3: 'lgold', 4: 'gold' }
+    const src = '/watch3001/assets/glass/' + dirs[i] + '/g_' + ch + '.png'
     if (this['slotSrc' + i] !== src) {
       this['slotSrc' + i] = src
     }
@@ -196,7 +196,7 @@ export default {
     .tcolon {
       width: 42px;
       height: 120px;
-      background-image: url("./assets/glass/g_colon.png");
+      background-image: url("./assets/glass/cream/g_colon.png");
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -335,15 +335,44 @@ export default {
     .f050 { background-image: url("./assets/frames/frame_050.jpg"); }
 
     /* 以下规则仅用于让编译器把玻璃数字资源打进安装包,运行时不使用 */
-    .g0 { background-image: url("./assets/glass/g_0.png"); }
-    .g1 { background-image: url("./assets/glass/g_1.png"); }
-    .g2 { background-image: url("./assets/glass/g_2.png"); }
-    .g3 { background-image: url("./assets/glass/g_3.png"); }
-    .g4 { background-image: url("./assets/glass/g_4.png"); }
-    .g5 { background-image: url("./assets/glass/g_5.png"); }
-    .g6 { background-image: url("./assets/glass/g_6.png"); }
-    .g7 { background-image: url("./assets/glass/g_7.png"); }
-    .g8 { background-image: url("./assets/glass/g_8.png"); }
-    .g9 { background-image: url("./assets/glass/g_9.png"); }
-    .gcolon { background-image: url("./assets/glass/g_colon.png"); }
+    .b0 { background-image: url("./assets/glass/blue/g_0.png"); }
+    .b1 { background-image: url("./assets/glass/blue/g_1.png"); }
+    .b2 { background-image: url("./assets/glass/blue/g_2.png"); }
+    .b3 { background-image: url("./assets/glass/blue/g_3.png"); }
+    .b4 { background-image: url("./assets/glass/blue/g_4.png"); }
+    .b5 { background-image: url("./assets/glass/blue/g_5.png"); }
+    .b6 { background-image: url("./assets/glass/blue/g_6.png"); }
+    .b7 { background-image: url("./assets/glass/blue/g_7.png"); }
+    .b8 { background-image: url("./assets/glass/blue/g_8.png"); }
+    .b9 { background-image: url("./assets/glass/blue/g_9.png"); }
+    .m0 { background-image: url("./assets/glass/mint/g_0.png"); }
+    .m1 { background-image: url("./assets/glass/mint/g_1.png"); }
+    .m2 { background-image: url("./assets/glass/mint/g_2.png"); }
+    .m3 { background-image: url("./assets/glass/mint/g_3.png"); }
+    .m4 { background-image: url("./assets/glass/mint/g_4.png"); }
+    .m5 { background-image: url("./assets/glass/mint/g_5.png"); }
+    .m6 { background-image: url("./assets/glass/mint/g_6.png"); }
+    .m7 { background-image: url("./assets/glass/mint/g_7.png"); }
+    .m8 { background-image: url("./assets/glass/mint/g_8.png"); }
+    .m9 { background-image: url("./assets/glass/mint/g_9.png"); }
+    .lg0 { background-image: url("./assets/glass/lgold/g_0.png"); }
+    .lg1 { background-image: url("./assets/glass/lgold/g_1.png"); }
+    .lg2 { background-image: url("./assets/glass/lgold/g_2.png"); }
+    .lg3 { background-image: url("./assets/glass/lgold/g_3.png"); }
+    .lg4 { background-image: url("./assets/glass/lgold/g_4.png"); }
+    .lg5 { background-image: url("./assets/glass/lgold/g_5.png"); }
+    .lg6 { background-image: url("./assets/glass/lgold/g_6.png"); }
+    .lg7 { background-image: url("./assets/glass/lgold/g_7.png"); }
+    .lg8 { background-image: url("./assets/glass/lgold/g_8.png"); }
+    .lg9 { background-image: url("./assets/glass/lgold/g_9.png"); }
+    .gd0 { background-image: url("./assets/glass/gold/g_0.png"); }
+    .gd1 { background-image: url("./assets/glass/gold/g_1.png"); }
+    .gd2 { background-image: url("./assets/glass/gold/g_2.png"); }
+    .gd3 { background-image: url("./assets/glass/gold/g_3.png"); }
+    .gd4 { background-image: url("./assets/glass/gold/g_4.png"); }
+    .gd5 { background-image: url("./assets/glass/gold/g_5.png"); }
+    .gd6 { background-image: url("./assets/glass/gold/g_6.png"); }
+    .gd7 { background-image: url("./assets/glass/gold/g_7.png"); }
+    .gd8 { background-image: url("./assets/glass/gold/g_8.png"); }
+    .gd9 { background-image: url("./assets/glass/gold/g_9.png"); }
 </style>
