@@ -10,9 +10,7 @@
         <text class="time c4">{{timeChars[4]}}</text>
       </div>
       <div class="steps-wrap">
-        <div class="steps-icon-box">
-          <image class="steps-icon" src="./assets/icon_walk.png" />
-        </div>
+        <div class="steps-icon"></div>
         <text class="steps-digit s0">{{stepsChars[0]}}</text>
         <text class="steps-digit s1">{{stepsChars[1]}}</text>
         <text class="steps-digit s2">{{stepsChars[2]}}</text>
@@ -167,16 +165,15 @@ export default {
       padding-bottom: 40px;
     }
 
-    .steps-icon-box {
-      width: 46px;
-      height: 46px;
+    .steps-icon {
+      width: 40px;
+      height: 40px;
+      background-image: url("./assets/icon_walk.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
       margin-right: 9px;
       margin-bottom: 10px;
-    }
-
-    .steps-icon {
-      width: 46px;
-      height: 46px;
     }
 
     .steps-digit {
