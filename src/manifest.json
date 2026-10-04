@@ -23,6 +23,9 @@
         "features": [
           {
             "name": "blueos.app.appmanager.router"
+          },
+          {
+            "name": "blueos.health.health"
           }
         ],
         "params": {

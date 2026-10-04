@@ -9,32 +9,47 @@
         <text class="time c3">{{timeChars[3]}}</text>
         <text class="time c4">{{timeChars[4]}}</text>
       </div>
+      <div class="steps-wrap">
+        <text class="time" for="{{stepsChars}}" style="color: {{$item.color}}">{{$item.ch}}</text>
+        <text class="steps-unit">步</text>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import health from '@blueos.health.health'
+
 const FRAME_COUNT = 50
 const FRAME_MS = 100
+const STEPS_MS = 10000
+const GRADIENT_FROM = [0x9a, 0xd9, 0xff]
+const GRADIENT_TO = [0xff, 0xd0, 0x28]
 
 export default {
   props: [],
   data() {
     return {
       timerId: -1,
+      stepsTimerId: -1,
       frameIdx: 1,
       timeChars: ['0', '0', ':', '0', '0'],
+      stepsChars: [{ ch: '0', color: '#cdd4a3' }],
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
     }
   },
 
   onInit() {
     this.updateTime()
+    this.updateSteps()
     this.timerId = setInterval(() => {
       this.frameIdx = this.frameIdx >= FRAME_COUNT ? 1 : this.frameIdx + 1
       this.bgUrl = '/watch3001/assets/frames/frame_' + this.pad(this.frameIdx) + '.jpg'
       this.updateTime()
     }, FRAME_MS)
+    this.stepsTimerId = setInterval(() => {
+      this.updateSteps()
+    }, STEPS_MS)
   },
 
   updateTime() {
@@ -42,8 +57,38 @@ export default {
     this.timeChars = (this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())).split('')
   },
 
+  updateSteps() {
+    health.getRecentSamples({
+      dataType: ['STEP_COUNT'],
+      success: (data) => {
+        const v = data && data.data && data.data.value
+        this.setSteps(Math.round(Number(v)) || 0)
+      },
+      fail: () => this.setSteps(0),
+    })
+  },
+
+  setSteps(n) {
+    const s = '' + n
+    const colors = this.gradientColors(s.length)
+    this.stepsChars = s.split('').map((ch, i) => ({ ch: ch, color: colors[i] }))
+  },
+
+  gradientColors(n) {
+    const colors = []
+    for (let i = 0; i < n; i++) {
+      const t = n === 1 ? 0.5 : i / (n - 1)
+      const r = Math.round(GRADIENT_FROM[0] + (GRADIENT_TO[0] - GRADIENT_FROM[0]) * t)
+      const g = Math.round(GRADIENT_FROM[1] + (GRADIENT_TO[1] - GRADIENT_FROM[1]) * t)
+      const b = Math.round(GRADIENT_FROM[2] + (GRADIENT_TO[2] - GRADIENT_FROM[2]) * t)
+      colors.push('rgb(' + r + ', ' + g + ', ' + b + ')')
+    }
+    return colors
+  },
+
   onDestroy() {
     clearInterval(this.timerId)
+    clearInterval(this.stepsTimerId)
   },
 
   pad(n) {
@@ -97,6 +142,26 @@ export default {
     .c2 { color: #f4e79e; }
     .c3 { color: #ffde6e; }
     .c4 { color: #ffd028; }
+
+    .steps-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding-bottom: 40px;
+      padding-right: 110px;
+    }
+
+    .steps-unit {
+      font-size: 26px;
+      color: #eef4ff;
+      opacity: 0.75;
+      margin-left: 6px;
+    }
   }
 }
 
@@ -116,6 +181,11 @@ export default {
       .time-wrap {
         padding-top: 12px;
         padding-left: 24px;
+      }
+
+      .steps-wrap {
+        padding-bottom: 12px;
+        padding-right: 24px;
       }
     }
   }
