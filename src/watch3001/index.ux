@@ -3,7 +3,11 @@
     <div class="container">
       <image class="bg" src="{{bgUrl}}" />
       <div class="time-wrap">
-        <text class="time">{{timeStr}}</text>
+        <text class="time c0">{{timeChars[0]}}</text>
+        <text class="time c1">{{timeChars[1]}}</text>
+        <text class="time c2">{{timeChars[2]}}</text>
+        <text class="time c3">{{timeChars[3]}}</text>
+        <text class="time c4">{{timeChars[4]}}</text>
       </div>
     </div>
   </div>
@@ -19,7 +23,7 @@ export default {
     return {
       timerId: -1,
       frameIdx: 1,
-      timeStr: '',
+      timeChars: ['0', '0', ':', '0', '0'],
       bgUrl: '/watch3001/assets/frames/frame_001.jpg',
     }
   },
@@ -35,7 +39,7 @@ export default {
 
   updateTime() {
     const t = new Date()
-    this.timeStr = this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())
+    this.timeChars = (this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())).split('')
   },
 
   onDestroy() {
@@ -72,18 +76,21 @@ export default {
 
     .time-wrap {
       position: absolute;
-      top: 20px;
-      left: 0;
-      width: 100%;
+      top: 40px;
+      left: 110px;
       flex-direction: row;
-      justify-content: center;
     }
 
     .time {
-      color: #ffd76a;
       font-size: 56px;
       font-weight: bold;
     }
+
+    .c0 { color: #b3e5ff; }
+    .c1 { color: #c6e7e6; }
+    .c2 { color: #d9e9ce; }
+    .c3 { color: #ececb5; }
+    .c4 { color: #ffee9c; }
   }
 }
 
@@ -101,7 +108,8 @@ export default {
       }
 
       .time-wrap {
-        top: 14px;
+        top: 12px;
+        left: 24px;
       }
     }
   }
