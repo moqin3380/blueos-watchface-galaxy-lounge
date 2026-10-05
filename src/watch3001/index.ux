@@ -130,6 +130,10 @@ export default {
       aodOn: false,
       aodFrame: 1,
       frameIdx: 1,
+      slotSrc0: '/watch3001/assets/glass/blue/g_0.png',
+      slotSrc1: '/watch3001/assets/glass/mint/g_0.png',
+      slotSrc3: '/watch3001/assets/glass/lgold/g_0.png',
+      slotSrc4: '/watch3001/assets/glass/gold/g_0.png',
       slotD0: '0',
       slotD1: '0',
       slotD3: '0',
@@ -198,6 +202,11 @@ export default {
   },
 
   setSlot(i, ch) {
+    const dirs = { 0: 'blue', 1: 'mint', 3: 'lgold', 4: 'gold' }
+    const src = '/watch3001/assets/glass/' + dirs[i] + '/g_' + ch + '.png'
+    if (this['slotSrc' + i] !== src) {
+      this['slotSrc' + i] = src
+    }
     this['slotD' + i] = ch
   },
 
