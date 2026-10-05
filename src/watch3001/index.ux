@@ -43,11 +43,11 @@
     </div>
     <div class="aod-wrap" if="{{aodOn}}">
       <div class="aod-time">
-        <image class="atdigit" src="{{aodT0}}" />
-        <image class="atdigit" src="{{aodT1}}" />
-        <image class="atcolon" src="{{aodT2}}" />
-        <image class="atdigit" src="{{aodT3}}" />
-        <image class="atdigit" src="{{aodT4}}" />
+        <image class="atdigit" src="{{slotSrc0}}" />
+        <image class="atdigit" src="{{slotSrc1}}" />
+        <div class="atcolon"></div>
+        <image class="atdigit" src="{{slotSrc3}}" />
+        <image class="atdigit" src="{{slotSrc4}}" />
       </div>
       <div class="aod-water-box">
         <div class="awf aw1" if="{{aodFrame === 1}}"></div>
@@ -85,11 +85,6 @@ export default {
       aodTimerId: -1,
       aodOn: true,
       aodFrame: 1,
-      aodT0: '/watch3001/assets/aod/t_0.png',
-      aodT1: '/watch3001/assets/aod/t_0.png',
-      aodT2: '/watch3001/assets/aod/t_colon.png',
-      aodT3: '/watch3001/assets/aod/t_0.png',
-      aodT4: '/watch3001/assets/aod/t_0.png',
       frameIdx: 1,
       slotSrc0: '/watch3001/assets/glass/blue/g_0.png',
       slotSrc1: '/watch3001/assets/glass/mint/g_0.png',
@@ -231,29 +226,10 @@ export default {
   enterAod() {
     this.aodOn = true
     this.aodFrame = 1
-    this.refreshAodTime()
     if (this.aodTimerId === -1) {
       this.aodTimerId = setInterval(() => {
         this.aodFrame = this.aodFrame >= AOD_FRAMES ? 1 : this.aodFrame + 1
-        this.refreshAodTime()
       }, AOD_MS)
-    }
-  },
-
-  refreshAodTime() {
-    const t = new Date()
-    const s = this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())
-    this.setAodT(0, s.charAt(0))
-    this.setAodT(1, s.charAt(1))
-    this.setAodT(2, s.charAt(2))
-    this.setAodT(3, s.charAt(3))
-    this.setAodT(4, s.charAt(4))
-  },
-
-  setAodT(i, ch) {
-    const src = '/watch3001/assets/aod/t_' + (ch === ':' ? 'colon' : ch) + '.png'
-    if (this['aodT' + i] !== src) {
-      this['aodT' + i] = src
     }
   },
 
@@ -556,30 +532,33 @@ export default {
 
     .aod-time {
       flex-direction: row;
-      margin-top: 140px;
+      margin-top: 100px;
     }
 
     .atdigit {
-      width: 96px;
+      width: 94px;
       height: 134px;
       object-fit: contain;
     }
 
     .atcolon {
-      width: 44px;
+      width: 40px;
       height: 134px;
-      object-fit: contain;
+      background-image: url("./assets/glass/cream/g_colon.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     .aod-water-box {
-      width: 210px;
-      height: 210px;
-      margin-top: 26px;
+      width: 150px;
+      height: 150px;
+      margin-top: 20px;
     }
 
     .awf {
-      width: 210px;
-      height: 210px;
+      width: 150px;
+      height: 150px;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -600,11 +579,11 @@ export default {
 
     @media screen and (device: watch-square) {
       .aod-time {
-        margin-top: 24px;
+        margin-top: 40px;
       }
 
       .aod-water-box {
-        margin-top: 30px;
+        margin-top: 24px;
       }
     }
 </style>
