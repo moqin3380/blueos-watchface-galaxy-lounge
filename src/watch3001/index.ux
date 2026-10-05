@@ -583,6 +583,9 @@ export default {
     .gd {
       width: 66px;
       height: 134px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     .atcolon {
@@ -603,7 +606,7 @@ export default {
     .awf {
       width: 150px;
       height: 150px;
-      background-size: cover;
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
     }
