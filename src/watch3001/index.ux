@@ -49,7 +49,20 @@
         <image class="atdigit" src="{{aodT3}}" />
         <image class="atdigit" src="{{aodT4}}" />
       </div>
-      <image class="aod-water" src="{{aodWaterSrc}}" />
+      <div class="aod-water-box">
+        <div class="awf aw1" if="{{aodFrame === 1}}"></div>
+        <div class="awf aw2" if="{{aodFrame === 2}}"></div>
+        <div class="awf aw3" if="{{aodFrame === 3}}"></div>
+        <div class="awf aw4" if="{{aodFrame === 4}}"></div>
+        <div class="awf aw5" if="{{aodFrame === 5}}"></div>
+        <div class="awf aw6" if="{{aodFrame === 6}}"></div>
+        <div class="awf aw7" if="{{aodFrame === 7}}"></div>
+        <div class="awf aw8" if="{{aodFrame === 8}}"></div>
+        <div class="awf aw9" if="{{aodFrame === 9}}"></div>
+        <div class="awf aw10" if="{{aodFrame === 10}}"></div>
+        <div class="awf aw11" if="{{aodFrame === 11}}"></div>
+        <div class="awf aw12" if="{{aodFrame === 12}}"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -72,7 +85,6 @@ export default {
       aodTimerId: -1,
       aodOn: true,
       aodFrame: 1,
-      aodWaterSrc: '/watch3001/assets/aod/water_01.png',
       aodT0: '/watch3001/assets/aod/t_0.png',
       aodT1: '/watch3001/assets/aod/t_0.png',
       aodT2: '/watch3001/assets/aod/t_colon.png',
@@ -223,7 +235,6 @@ export default {
     if (this.aodTimerId === -1) {
       this.aodTimerId = setInterval(() => {
         this.aodFrame = this.aodFrame >= AOD_FRAMES ? 1 : this.aodFrame + 1
-        this.aodWaterSrc = '/watch3001/assets/aod/water_' + this.pad2(this.aodFrame) + '.png'
         this.refreshAodTime()
       }, AOD_MS)
     }
@@ -549,21 +560,41 @@ export default {
     }
 
     .atdigit {
-      width: 64px;
-      height: 120px;
+      width: 96px;
+      height: 134px;
       object-fit: contain;
     }
 
     .atcolon {
-      width: 30px;
-      height: 120px;
+      width: 44px;
+      height: 134px;
       object-fit: contain;
     }
 
-    .aod-water {
+    .aod-water-box {
       width: 210px;
       height: 210px;
       margin-top: 30px;
-      object-fit: cover;
     }
+
+    .awf {
+      width: 210px;
+      height: 210px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .aw1 { background-image: url("./assets/aod/water_01.png"); }
+    .aw2 { background-image: url("./assets/aod/water_02.png"); }
+    .aw3 { background-image: url("./assets/aod/water_03.png"); }
+    .aw4 { background-image: url("./assets/aod/water_04.png"); }
+    .aw5 { background-image: url("./assets/aod/water_05.png"); }
+    .aw6 { background-image: url("./assets/aod/water_06.png"); }
+    .aw7 { background-image: url("./assets/aod/water_07.png"); }
+    .aw8 { background-image: url("./assets/aod/water_08.png"); }
+    .aw9 { background-image: url("./assets/aod/water_09.png"); }
+    .aw10 { background-image: url("./assets/aod/water_10.png"); }
+    .aw11 { background-image: url("./assets/aod/water_11.png"); }
+    .aw12 { background-image: url("./assets/aod/water_12.png"); }
 </style>
