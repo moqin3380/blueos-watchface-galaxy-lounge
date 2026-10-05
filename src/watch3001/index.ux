@@ -127,7 +127,7 @@ export default {
       timerId: -1,
       stepsTimerId: -1,
       aodTimerId: -1,
-      aodOn: true,
+      aodOn: false,
       aodFrame: 1,
       frameIdx: 1,
       slotD0: '0',
