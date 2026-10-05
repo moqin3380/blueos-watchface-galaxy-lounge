@@ -42,7 +42,14 @@
       </div>
     </div>
     <div class="aod-wrap" if="{{aodOn}}">
-      <image class="aod-water" src="{{aodSrc}}" />
+      <div class="aod-time">
+        <image class="atdigit" src="{{aodT0}}" />
+        <image class="atdigit" src="{{aodT1}}" />
+        <image class="atcolon" src="{{aodT2}}" />
+        <image class="atdigit" src="{{aodT3}}" />
+        <image class="atdigit" src="{{aodT4}}" />
+      </div>
+      <image class="aod-water" src="{{aodWaterSrc}}" />
     </div>
   </div>
 </template>
@@ -63,9 +70,14 @@ export default {
       timerId: -1,
       stepsTimerId: -1,
       aodTimerId: -1,
-      aodOn: false,
+      aodOn: true,
       aodFrame: 1,
-      aodSrc: '/watch3001/assets/aod/water_01.jpg',
+      aodWaterSrc: '/watch3001/assets/aod/water_01.jpg',
+      aodT0: '/watch3001/assets/aod/t_0.png',
+      aodT1: '/watch3001/assets/aod/t_0.png',
+      aodT2: '/watch3001/assets/aod/t_colon.png',
+      aodT3: '/watch3001/assets/aod/t_0.png',
+      aodT4: '/watch3001/assets/aod/t_0.png',
       frameIdx: 1,
       slotSrc0: '/watch3001/assets/glass/blue/g_0.png',
       slotSrc1: '/watch3001/assets/glass/mint/g_0.png',
@@ -204,12 +216,30 @@ export default {
   enterAod() {
     this.aodOn = true
     this.aodFrame = 1
-    this.aodSrc = '/watch3001/assets/aod/water_01.jpg'
+    this.refreshAodTime()
     if (this.aodTimerId === -1) {
       this.aodTimerId = setInterval(() => {
         this.aodFrame = this.aodFrame >= AOD_FRAMES ? 1 : this.aodFrame + 1
-        this.aodSrc = '/watch3001/assets/aod/water_' + this.pad(this.aodFrame) + '.jpg'
+        this.aodWaterSrc = '/watch3001/assets/aod/water_' + this.pad(this.aodFrame) + '.jpg'
+        this.refreshAodTime()
       }, AOD_MS)
+    }
+  },
+
+  refreshAodTime() {
+    const t = new Date()
+    const s = this.pad2(t.getHours()) + ':' + this.pad2(t.getMinutes())
+    this.setAodT(0, s.charAt(0))
+    this.setAodT(1, s.charAt(1))
+    this.setAodT(2, s.charAt(2))
+    this.setAodT(3, s.charAt(3))
+    this.setAodT(4, s.charAt(4))
+  },
+
+  setAodT(i, ch) {
+    const src = '/watch3001/assets/aod/t_' + (ch === ':' ? 'colon' : ch) + '.png'
+    if (this['aodT' + i] !== src) {
+      this['aodT' + i] = src
     }
   },
 
@@ -505,12 +535,32 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
+      flex-direction: column;
+      align-items: center;
       background-color: #000000;
     }
 
+    .aod-time {
+      flex-direction: row;
+      margin-top: 20px;
+    }
+
+    .atdigit {
+      width: 100px;
+      height: 176px;
+      object-fit: contain;
+    }
+
+    .atcolon {
+      width: 44px;
+      height: 176px;
+      object-fit: contain;
+    }
+
     .aod-water {
-      width: 100%;
-      height: 100%;
+      width: 210px;
+      height: 210px;
+      margin-top: 30px;
       object-fit: cover;
     }
 </style>
