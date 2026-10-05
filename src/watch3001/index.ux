@@ -72,7 +72,7 @@ export default {
       aodTimerId: -1,
       aodOn: true,
       aodFrame: 1,
-      aodWaterSrc: '/watch3001/assets/aod/water_01.jpg',
+      aodWaterSrc: '/watch3001/assets/aod/water_01.png',
       aodT0: '/watch3001/assets/aod/t_0.png',
       aodT1: '/watch3001/assets/aod/t_0.png',
       aodT2: '/watch3001/assets/aod/t_colon.png',
@@ -109,6 +109,9 @@ export default {
     this.updateTime()
     this.initSteps()
     this.initAod()
+    if (this.aodOn) {
+      this.enterAod()
+    }
     this.timerId = setInterval(() => {
       this.frameIdx = this.frameIdx >= FRAME_COUNT ? 1 : this.frameIdx + 1
       this.bgUrl = '/watch3001/assets/frames/frame_' + this.pad(this.frameIdx) + '.jpg'
@@ -220,7 +223,7 @@ export default {
     if (this.aodTimerId === -1) {
       this.aodTimerId = setInterval(() => {
         this.aodFrame = this.aodFrame >= AOD_FRAMES ? 1 : this.aodFrame + 1
-        this.aodWaterSrc = '/watch3001/assets/aod/water_' + this.pad(this.aodFrame) + '.jpg'
+        this.aodWaterSrc = '/watch3001/assets/aod/water_' + this.pad(this.aodFrame) + '.png'
         this.refreshAodTime()
       }, AOD_MS)
     }
@@ -546,14 +549,14 @@ export default {
     }
 
     .atdigit {
-      width: 100px;
-      height: 176px;
+      width: 88px;
+      height: 170px;
       object-fit: contain;
     }
 
     .atcolon {
-      width: 44px;
-      height: 176px;
+      width: 46px;
+      height: 170px;
       object-fit: contain;
     }
 
