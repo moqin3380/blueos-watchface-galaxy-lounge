@@ -43,11 +43,55 @@
     </div>
     <div class="aod-wrap" if="{{aodOn}}">
       <div class="aod-time">
-        <image class="atdigit" src="{{slotSrc0}}" />
-        <image class="atdigit" src="{{slotSrc1}}" />
+        <div class="atdigit">
+          <div class="gd b0" if="{{slotD0 === '0'}}"></div>
+          <div class="gd b1" if="{{slotD0 === '1'}}"></div>
+          <div class="gd b2" if="{{slotD0 === '2'}}"></div>
+          <div class="gd b3" if="{{slotD0 === '3'}}"></div>
+          <div class="gd b4" if="{{slotD0 === '4'}}"></div>
+          <div class="gd b5" if="{{slotD0 === '5'}}"></div>
+          <div class="gd b6" if="{{slotD0 === '6'}}"></div>
+          <div class="gd b7" if="{{slotD0 === '7'}}"></div>
+          <div class="gd b8" if="{{slotD0 === '8'}}"></div>
+          <div class="gd b9" if="{{slotD0 === '9'}}"></div>
+        </div>
+        <div class="atdigit">
+          <div class="gd m0" if="{{slotD1 === '0'}}"></div>
+          <div class="gd m1" if="{{slotD1 === '1'}}"></div>
+          <div class="gd m2" if="{{slotD1 === '2'}}"></div>
+          <div class="gd m3" if="{{slotD1 === '3'}}"></div>
+          <div class="gd m4" if="{{slotD1 === '4'}}"></div>
+          <div class="gd m5" if="{{slotD1 === '5'}}"></div>
+          <div class="gd m6" if="{{slotD1 === '6'}}"></div>
+          <div class="gd m7" if="{{slotD1 === '7'}}"></div>
+          <div class="gd m8" if="{{slotD1 === '8'}}"></div>
+          <div class="gd m9" if="{{slotD1 === '9'}}"></div>
+        </div>
         <div class="atcolon"></div>
-        <image class="atdigit" src="{{slotSrc3}}" />
-        <image class="atdigit" src="{{slotSrc4}}" />
+        <div class="atdigit">
+          <div class="gd lg0" if="{{slotD3 === '0'}}"></div>
+          <div class="gd lg1" if="{{slotD3 === '1'}}"></div>
+          <div class="gd lg2" if="{{slotD3 === '2'}}"></div>
+          <div class="gd lg3" if="{{slotD3 === '3'}}"></div>
+          <div class="gd lg4" if="{{slotD3 === '4'}}"></div>
+          <div class="gd lg5" if="{{slotD3 === '5'}}"></div>
+          <div class="gd lg6" if="{{slotD3 === '6'}}"></div>
+          <div class="gd lg7" if="{{slotD3 === '7'}}"></div>
+          <div class="gd lg8" if="{{slotD3 === '8'}}"></div>
+          <div class="gd lg9" if="{{slotD3 === '9'}}"></div>
+        </div>
+        <div class="atdigit">
+          <div class="gd gd0" if="{{slotD4 === '0'}}"></div>
+          <div class="gd gd1" if="{{slotD4 === '1'}}"></div>
+          <div class="gd gd2" if="{{slotD4 === '2'}}"></div>
+          <div class="gd gd3" if="{{slotD4 === '3'}}"></div>
+          <div class="gd gd4" if="{{slotD4 === '4'}}"></div>
+          <div class="gd gd5" if="{{slotD4 === '5'}}"></div>
+          <div class="gd gd6" if="{{slotD4 === '6'}}"></div>
+          <div class="gd gd7" if="{{slotD4 === '7'}}"></div>
+          <div class="gd gd8" if="{{slotD4 === '8'}}"></div>
+          <div class="gd gd9" if="{{slotD4 === '9'}}"></div>
+        </div>
       </div>
       <div class="aod-water-box">
         <div class="awf aw1" if="{{aodFrame === 1}}"></div>
@@ -86,10 +130,10 @@ export default {
       aodOn: true,
       aodFrame: 1,
       frameIdx: 1,
-      slotSrc0: '/watch3001/assets/glass/blue/g_0.png',
-      slotSrc1: '/watch3001/assets/glass/mint/g_0.png',
-      slotSrc3: '/watch3001/assets/glass/lgold/g_0.png',
-      slotSrc4: '/watch3001/assets/glass/gold/g_0.png',
+      slotD0: '0',
+      slotD1: '0',
+      slotD3: '0',
+      slotD4: '0',
       dateSrc1: '/watch3001/assets/glass/blue/c_ri.png',
       dateSrc2: '/watch3001/assets/glass/blue/g_1.png',
       dateSrc3: '/watch3001/assets/glass/blue/g_0.png',
@@ -154,11 +198,7 @@ export default {
   },
 
   setSlot(i, ch) {
-    const dirs = { 0: 'blue', 1: 'mint', 3: 'lgold', 4: 'gold' }
-    const src = '/watch3001/assets/glass/' + dirs[i] + '/g_' + ch + '.png'
-    if (this['slotSrc' + i] !== src) {
-      this['slotSrc' + i] = src
-    }
+    this['slotD' + i] = ch
   },
 
   initSteps() {
@@ -536,9 +576,13 @@ export default {
     }
 
     .atdigit {
-      width: 94px;
+      width: 66px;
       height: 134px;
-      object-fit: contain;
+    }
+
+    .gd {
+      width: 66px;
+      height: 134px;
     }
 
     .atcolon {
