@@ -26,6 +26,9 @@
           },
           {
             "name": "blueos.health.health"
+          },
+          {
+            "name": "blueos.app.event.eventManager"
           }
         ],
         "params": {
