@@ -556,7 +556,7 @@ export default {
 
     .aod-time {
       flex-direction: row;
-      margin-top: 24px;
+      margin-top: 140px;
     }
 
     .atdigit {
@@ -574,7 +574,7 @@ export default {
     .aod-water-box {
       width: 210px;
       height: 210px;
-      margin-top: 30px;
+      margin-top: 26px;
     }
 
     .awf {
@@ -597,4 +597,14 @@ export default {
     .aw10 { background-image: url("./assets/aod/water_10.png"); }
     .aw11 { background-image: url("./assets/aod/water_11.png"); }
     .aw12 { background-image: url("./assets/aod/water_12.png"); }
+
+    @media screen and (device: watch-square) {
+      .aod-time {
+        margin-top: 24px;
+      }
+
+      .aod-water-box {
+        margin-top: 30px;
+      }
+    }
 </style>
