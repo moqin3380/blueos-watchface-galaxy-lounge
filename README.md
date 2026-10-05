@@ -2,6 +2,13 @@
 
 基于 vivo 蓝河操作系统(BlueOS)的手表表盘项目,将 Wallpaper Engine 壁纸 **「Galaxy Lounge 4K」** 做成动态表盘。
 
+## 预览
+
+| | 圆表 | 方表 |
+|---|---|---|
+| **主界面** | ![主界面 圆表](docs/screenshots/main-round.png) | ![主界面 方表](docs/screenshots/main-square.png) |
+| **息屏显示(AOD)** | ![AOD 圆表](docs/screenshots/aod-round.png) | ![AOD 方表](docs/screenshots/aod-square.png) |
+
 ## 效果
 
 - 表盘主体为动态壁纸:从原视频截取 5 秒(466×466,10fps,共 50 帧 JPEG),由帧序列动画循环播放
